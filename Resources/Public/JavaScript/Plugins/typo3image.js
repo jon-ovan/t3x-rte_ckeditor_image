@@ -481,21 +481,29 @@ export default class Typo3Image extends Core.Plugin {
                     ]
                 },
                 view: (modelElement, { writer }) => {
-                    return writer.createEmptyElement(
-                        'img',
-                        {
-                            'src': modelElement.getAttribute('src'),
-                            'data-htmlarea-file-uid': modelElement.getAttribute('fileUid'),
-                            'data-htmlarea-file-table': modelElement.getAttribute('fileTable'),
-                            'width': modelElement.getAttribute('width'),
-                            'height': modelElement.getAttribute('height'),
-                            'title': modelElement.getAttribute('title') || '',
-                            'data-title-override': modelElement.getAttribute('titleOverride') || false,
-                            'alt': modelElement.getAttribute('alt') || '',
-                            'data-alt-override': modelElement.getAttribute('altOverride') || false,
-                            'data-htmlarea-zoom': modelElement.getAttribute('enableZoom') || false,
-                        }
-                    )
+                    const attributes = {
+                        'src': modelElement.getAttribute('src'),
+                        'data-htmlarea-file-uid': modelElement.getAttribute('fileUid'),
+                        'data-htmlarea-file-table': modelElement.getAttribute('fileTable'),
+                        'width': modelElement.getAttribute('width'),
+                        'height': modelElement.getAttribute('height'),
+                        'title': modelElement.getAttribute('title') || '',
+                        'alt': modelElement.getAttribute('alt') || '',
+                    }
+
+                    if (modelElement.getAttribute('titleOverride') || false) {
+                        attributes['data-title-override'] = true
+                    }
+
+                    if (modelElement.getAttribute('altOverride') || false) {
+                        attributes['data-alt-override'] = true
+                    }
+
+                    if (modelElement.getAttribute('enableZoom') || false) {
+                        attributes['data-htmlarea-zoom'] = true
+                    }
+
+                    return writer.createEmptyElement('img', attributes)
                 },
             });
 
@@ -510,7 +518,7 @@ export default class Typo3Image extends Core.Plugin {
         });
 
 
-        editor.ui.componentFactory.add('image', () => {
+        editor.ui.componentFactory.add(Typo3Image.pluginName, () => {
             const button = new UI.ButtonView();
 
             button.set({

@@ -8,6 +8,6 @@ return [
         'backend.form',
     ],
     'imports' => [
-        '@netresearch/rte-ckeditor-image/' => 'EXT:rte_ckeditor_image/Resources/Public/JavaScript/',
+        '@netresearch/rte-ckeditor-image' => 'EXT:rte_ckeditor_image/Resources/Public/JavaScript/Plugins/typo3image.js',
     ],
 ];

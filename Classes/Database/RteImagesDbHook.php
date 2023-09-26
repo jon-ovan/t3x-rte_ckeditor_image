@@ -235,6 +235,10 @@ class RteImagesDbHook
     public function processDatamap_postProcessFieldArray(string $status, string $table, string $id, array &$fieldArray, \TYPO3\CMS\Core\DataHandling\DataHandler &$dataHandler): void
     {
         foreach ($fieldArray as $field => $fieldValue) {
+            // Ignore null fields
+            if ($fieldValue === null) {
+                continue;
+              }
             // Ignore not existing fields in TCA definition
             if (!isset($GLOBALS['TCA'][$table]['columns'][$field])) {
                 continue;

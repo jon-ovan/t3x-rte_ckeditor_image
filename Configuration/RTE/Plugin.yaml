@@ -2,7 +2,7 @@
 editor:
   config:
     importModules:
-      -  '@netresearch/rte-ckeditor-image/Plugins/typo3image.js'
+      - '@netresearch/rte-ckeditor-image'
 
   externalPlugins:
       typo3image: { route: "rteckeditorimage_wizard_select_image" }
