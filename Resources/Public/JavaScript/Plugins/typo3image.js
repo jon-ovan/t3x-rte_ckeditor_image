@@ -1,6 +1,3 @@
-/*jslint browser: true, this: true, multivar: true, white: true, devel: true*/
-/*global $, $$, jquery, window, document, require, CKEDITOR*/
-
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -396,7 +393,6 @@ function edit(selectedImage, editor, imageAttributes) {
         .then(function (attributes) {
 
             editor.model.change(writer => {
-                console.log(attributes);
 
                 const newImage = writer.createElement('typo3image', {
                     fileUid: attributes.fileUid,
@@ -405,6 +401,7 @@ function edit(selectedImage, editor, imageAttributes) {
                     height: attributes.height,
                     width: attributes.width,
                     title: attributes.title,
+                    class: attributes.class,
                     titleOverride: attributes['data-title-override'],
                     alt: attributes.alt,
                     altOverride: attributes['data-alt-override'],
@@ -456,6 +453,7 @@ export default class Typo3Image extends Core.Plugin {
                 model: (viewElement, { writer }) => {
                     return writer.createElement('typo3image', {
                         fileUid: viewElement.getAttribute('data-htmlarea-file-uid'),
+                        class: viewElement.getAttribute('class'),
                         fileTable: viewElement.getAttribute('data-htmlarea-file-table') || 'sys_file',
                         src: viewElement.getAttribute('src'),
                         width: viewElement.getAttribute('width') || '',
@@ -483,6 +481,7 @@ export default class Typo3Image extends Core.Plugin {
                 view: (modelElement, { writer }) => {
                     const attributes = {
                         'src': modelElement.getAttribute('src'),
+                        'class': modelElement.getAttribute('class'),
                         'data-htmlarea-file-uid': modelElement.getAttribute('fileUid'),
                         'data-htmlarea-file-table': modelElement.getAttribute('fileTable'),
                         'width': modelElement.getAttribute('width'),
@@ -544,6 +543,7 @@ export default class Typo3Image extends Core.Plugin {
                             height: selectedElement.getAttribute('height'),
                             alt: selectedElement.getAttribute('alt'),
                             title: selectedElement.getAttribute('title'),
+                            class: selectedElement.getAttribute('class'),
                             'data-htmlarea-zoom': selectedElement.getAttribute('enableZoom'),
                             'data-title-override': selectedElement.getAttribute('titleOverride'),
                             'data-alt-override': selectedElement.getAttribute('altOverride'),
@@ -578,6 +578,7 @@ export default class Typo3Image extends Core.Plugin {
                         height: modelElement.getAttribute('height'),
                         alt: modelElement.getAttribute('alt'),
                         title: modelElement.getAttribute('title'),
+                        class: modelElement.getAttribute('class'),
                         'data-htmlarea-zoom': modelElement.getAttribute('enableZoom'),
                         'data-title-override': modelElement.getAttribute('titleOverride'),
                         'data-alt-override': modelElement.getAttribute('altOverride'),
